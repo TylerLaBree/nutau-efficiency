@@ -12,7 +12,7 @@ def provide_get_valid_handle(klass):
      parameter klass."""
   ROOT.gROOT.ProcessLine('template gallery::ValidHandle<%(name)s> gallery::Event::getValidHandle<%(name)s>(art::InputTag const&) const;' % {'name' : klass})
 
-def start_if_true(criterion):
+def star_if_true(criterion):
   return "*" if criterion else ""
 
 def dump_events(filename, sample_size=10):
@@ -32,7 +32,7 @@ def dump_events(filename, sample_size=10):
     particles = (event.product()[0].GetParticle(i) for i in range(num_particles))
     for particle in particles:
       pdg_code = particle.PdgCode() 
-      print("pgd_code:", pdg_code, start_if_true(pdg_code in important_particles))
+      print("pgd_code:", pdg_code, star_if_true(pdg_code in important_particles))
       four_momentum = [particle.Momentum()[j] for j in range(4)]
       print("energy:", four_momentum[3])
     events.next()
