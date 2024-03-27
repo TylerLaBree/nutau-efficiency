@@ -37,4 +37,4 @@ def dump_events(filename, sample_size=10):
       print("energy:", four_momentum[3])
     events.next()
 
-dump_events("../tau-data/prodgenie_nutau_dune10kt_1x2x6_1000evts_gen_g4_detsim_reco_001.root", 10)
+dump_events("/lstr/sahara/dune/tlabree/nutau-data/prodgenie_nutau_dune10kt_1x2x6_1000evts_gen_g4_detsim_reco_001.root", 10)
