@@ -28,3 +28,6 @@ source setup-pyroot.sh
 python event-loop.py
 ```
 
+## Jupyter Lab
+
+Follow instructions [here](https://www.niu.edu/crcd/current-users/crnt-users-software.shtml) for using jupyter lab on metis:
