@@ -2,7 +2,7 @@
 
 ## Data
 
-This analysis is designed to work on NuGraph training files for tau reconstruction (Credit: Will Dallaway).
+This analysis is designed to work on NuGraph training files for tau reconstruction (Credit: Will Dallaway). The data is present on the [Metis Cluster](https://www.niu.edu/crcd/prospective-user/index.shtml#metis), and the setup is designed specifically to work in it's environment.
 
 ## First-time setup
 
@@ -30,4 +30,4 @@ python event-loop.py
 
 ## Jupyter Lab
 
-Follow instructions [here](https://www.niu.edu/crcd/current-users/crnt-users-software.shtml) for using jupyter lab on metis:
+Follow instructions [here](https://www.niu.edu/crcd/current-users/crnt-users-software.shtml) for using jupyter lab on Metis.
