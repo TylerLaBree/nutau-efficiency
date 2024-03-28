@@ -12,8 +12,8 @@ def get_status_code(particle):
 
 def is_final_state(particle):
     """
-    StatusCode == 1 means stable final state
-    StatusCode == 15 means final state nuclear remnant
+    Status code 1 means stable final state
+    Status code 15 means final state nuclear remnant
     """
     return get_status_code(particle) in [1, 15]
 
@@ -122,6 +122,19 @@ def other_particle_energy_sum(event):
 def missing_transverse_momentum(event):
     """
     Machado p_T^miss
-    Returns the transverse component of the momentum orthogonal to the beamline
+    Returns the transverse component of the momentum orthogonal to the beam-line
+    """
+    return 0
+
+
+def num_jets(event):
+    """
+    Machado N_jet
+    Returns the number of jets according to the following jet clustering algorithm:
+    "In order to be clustered into a single jet, visible particles must be within
+    radius of R = 0.6, with R = √(η^2 + φ^2) where η = −log tan(θ/2) is the pseudo-
+    rapidity (θ is the angle between the particle and the jet axis) and φ is the
+    azimuthal angle with respect to the jet axis." 
+    - Machado 2020
     """
     return 0
