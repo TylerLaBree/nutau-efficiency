@@ -1,4 +1,4 @@
-import itertools
+import itertools as it
 
 
 def particles_in_event(event):
@@ -16,6 +16,21 @@ def is_final_state(particle):
     StatusCode == 15 means final state nuclear remnant
     """
     return get_status_code(particle) in [1, 15]
+
+
+def is_neutrino(particle):
+    return particle.PdgCode() in [12, 14, 16]
+
+
+def is_sufficient_energy(particle):
+    pdg_code = particle.PdgCode()
+    if pdg_code in [211, -211]:  # (anti)pion
+        return energy(particle) > 0.1  # GeV
+    if pdg_code == 2212:  # proton
+        return energy(particle) > 0.05  # GeV
+    if pdg_code in [22, 11, 13]:  # photon, electron, muon
+        return energy(particle) > 0.03  # GeV
+    return True
 
 
 def is_visible(particle):
@@ -83,9 +98,7 @@ def num_pions(event):
     He says later that we may not be able to discriminate positive and negative pions.
     """
     return sum(
-        itertools.compress(
-            map(int, map(is_pion, pdg_codes(event))), visible_particles(event)
-        )
+        it.compress(map(int, map(is_pion, pdg_codes(event))), visible_particles(event))
     )
 
 
@@ -94,24 +107,7 @@ def leading_pion_energies(event):
     Machado π^-_lead
     Returns the energy of the leading pion
     """
-    return max(
-        itertools.compress(energies(event), map(is_pion, pdg_codes(event))), default=0
-    )
-
-
-def is_neutrino(particle):
-    return particle.PdgCode() in [12, 14, 16]
-
-
-def is_sufficient_energy(particle):
-    pdg_code = particle.PdgCode()
-    if pdg_code in [211, -211]:  # (anti)pion
-        return energy(particle) > 0.1  # GeV
-    if pdg_code == 2212:  # proton
-        return energy(particle) > 0.05  # GeV
-    if pdg_code in [22, 11, 13]:  # photon, electron, muon
-        return energy(particle) > 0.03  # GeV
-    return True
+    return max(it.compress(energies(event), map(is_pion, pdg_codes(event))), default=0)
 
 
 def other_particle_energy_sum(event):
@@ -120,7 +116,7 @@ def other_particle_energy_sum(event):
     Returns the sum of particles energies which are not the leading pion
     He says this is visible particle energies only!
     """
-    return sum(itertools.compress(energies(event), visible_particles(event)))
+    return sum(it.compress(energies(event), visible_particles(event)))
 
 
 def missing_transverse_momentum(event):
