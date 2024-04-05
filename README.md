@@ -25,7 +25,7 @@ source setup-pyroot.sh
 ## Test
 
 ```
-python event-loop.py
+python test.py
 ```
 
 ## Jupyter Lab
