@@ -42,9 +42,6 @@ def dump_events(filename, sample_size=10):
     get_mctruths = events.getValidHandle[ROOT.vector(ROOT.simb.MCTruth)]
     count = 0
 
-    def star_if_true(criterion):
-        return "*" if criterion else ""
-
     while not events.atEnd():
         event = get_mctruths(mctruths_tag)
         if count >= sample_size or event.empty():
@@ -57,7 +54,7 @@ def dump_events(filename, sample_size=10):
         particles = (event.product()[0].GetParticle(i) for i in range(num_particles))
         for particle in particles:
             pdg_code = particle.PdgCode()
-            print("pgd_code:", pdg_code, star_if_true(pdg_code in important_particles))
+            print("pgd_code:", pdg_code)
             four_momentum = [particle.Momentum()[j] for j in range(4)]
             print("energy:", four_momentum[3])
         events.next()
