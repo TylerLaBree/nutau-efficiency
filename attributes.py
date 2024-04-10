@@ -113,9 +113,9 @@ def num_leptons(event):
     return sum(map(int, kept_particles(event, [is_lepton, is_visible])))
 
 
-def is_pion(particle):
+def is_negative_pion(particle):
     "Helper function for num_pions and leading_pion_energies"
-    return pdg_code(particle) == 211
+    return pdg_code(particle) == -211
 
 
 def num_pions(event):
@@ -124,7 +124,7 @@ def num_pions(event):
     Returns number of negative pions.
     He says later that we may not be able to discriminate positive and negative pions.
     """
-    return sum(map(int, kept_particles(event, [is_pion, is_visible])))
+    return sum(map(int, kept_particles(event, [is_negative_pion, is_visible])))
 
 
 def keep_event(event):
@@ -138,7 +138,7 @@ def leading_pion_energies(event):
     """
 
     return max(
-        it.compress(energies(event), kept_particles(event, [is_pion, is_visible])),
+        it.compress(energies(event), kept_particles(event, [is_negative_pion, is_visible])),
         default=0,
     )
 
@@ -151,7 +151,7 @@ def other_particle_energy_sum(event):
     """
 
     def is_not_pion(particle):
-        return not is_pion(particle)
+        return not is_negative_pion(particle)
 
     return sum(
         it.compress(energies(event), kept_particles(event, [is_not_pion, is_visible]))
