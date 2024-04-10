@@ -131,7 +131,7 @@ def keep_event(event):
     return num_pions(event) != 0 and num_leptons(event) == 0
 
 
-def leading_pion_energies(event):
+def leading_pion_energy(event):
     """
     Machado π^-_lead
     Returns the energy of the leading pion
