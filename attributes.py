@@ -138,7 +138,9 @@ def leading_pion_energy(event):
     """
 
     return max(
-        it.compress(energies(event), kept_particles(event, [is_negative_pion, is_visible])),
+        it.compress(
+            energies(event), kept_particles(event, [is_negative_pion, is_visible])
+        ),
         default=0,
     )
 
@@ -150,12 +152,9 @@ def other_particle_energy_sum(event):
     He says this is visible particle energies only!
     """
 
-    def is_not_pion(particle):
-        return not is_negative_pion(particle)
-
     return sum(
-        it.compress(energies(event), kept_particles(event, [is_not_pion, is_visible]))
-    )
+        it.compress(energies(event), kept_particles(event, [is_visible]))
+    ) - leading_pion_energy(event)
 
 
 def missing_transverse_momentum(event):
