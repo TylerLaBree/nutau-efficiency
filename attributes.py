@@ -1,10 +1,15 @@
 import itertools as it
 import functools as ft
+import vector_math as v
 
 
 def particles_in_event(event):
     "Gives a generator for particles given an event"
     return (event.product()[0].GetParticle(i) for i in range(num_particles(event)))
+
+
+def initial_neutrino(event):
+    return event.product()[0].GetParticle(0) 
 
 
 def get_status_code(particle):
@@ -81,11 +86,15 @@ def four_momentums(event):
 
 
 def momentum(particle):
-    return four_momentum(particle)[:2]
+    return four_momentum(particle)[:3]
 
 
 def momentums(event):
     return [momentum(particle) for particle in particles_in_event(event)]
+
+
+def neutrino_direction(event):
+    return momentum(initial_neutrino(event))
 
 
 def energy(particle):
@@ -136,7 +145,6 @@ def leading_pion_energy(event):
     Machado π^-_lead
     Returns the energy of the leading pion
     """
-
     return max(
         it.compress(
             energies(event), kept_particles(event, [is_negative_pion, is_visible])
@@ -151,10 +159,13 @@ def other_particle_energy_sum(event):
     Returns the sum of particles energies which are not the leading pion
     He says this is visible particle energies only!
     """
-
     return sum(
         it.compress(energies(event), kept_particles(event, [is_visible]))
     ) - leading_pion_energy(event)
+
+
+def neutrino_direction(event):
+    return momentum(initial_neutrino(event))
 
 
 def missing_transverse_momentum(event):
@@ -162,7 +173,15 @@ def missing_transverse_momentum(event):
     Machado p_T^miss
     Returns the transverse component of the momentum orthogonal to the beam-line
     """
-    return 0
+    beamline_direction = [
+        -7.818601810437586e-08,
+        0.10082778355381398,
+        0.9949038938776671,
+    ]
+    total_visible_momentum = ft.reduce(
+        v.add_vectors, it.compress(momentums(event), kept_particles(event)), [0, 0, 0]
+    )
+    return v.dot_product(total_visible_momentum, beamline_direction)
 
 
 def num_jets(event):
