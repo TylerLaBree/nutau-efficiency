@@ -47,14 +47,15 @@ def dump_events(filename, sample_size=10):
         if count >= sample_size or event.empty():
             break
         count += 1
-        num_particles = event.product()[0].NParticles()
+        particle_count = event.product()[0].NParticles()
         print()
-        print("num_particles:", num_particles)
+        print("particle_count:", particle_count)
 
-        particles = (event.product()[0].GetParticle(i) for i in range(num_particles))
+        particles = (event.product()[0].GetParticle(i) for i in range(particle_count))
         for particle in particles:
             pdg_code = particle.PdgCode()
             print("pgd_code:", pdg_code)
             four_momentum = [particle.Momentum()[j] for j in range(4)]
             print("energy:", four_momentum[3])
         events.next()
+

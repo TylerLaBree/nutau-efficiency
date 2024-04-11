@@ -9,7 +9,7 @@ def particles_in_event(event):
 
 
 def initial_neutrino(event):
-    return event.product()[0].GetParticle(0) 
+    return event.product()[0].GetParticle(0)
 
 
 def get_status_code(particle):
@@ -178,7 +178,9 @@ def missing_transverse_momentum(event):
         0.10082778355381398,
         0.9949038938776671,
     ]
-    total_visible_momentum = v.sum(it.compress(momenta(event), kept_particles(event)))
+    total_visible_momentum = ft.reduce(
+        v.add, it.compress(momenta(event), kept_particles(event)), [0] * 3
+    )
     return v.dot(total_visible_momentum, beamline_direction)
 
 

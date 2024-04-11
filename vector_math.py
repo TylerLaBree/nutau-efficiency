@@ -5,7 +5,7 @@ def add(u, v):
     return [a + b for (a, b) in zip(u, v)]
 
 
-def sum(vs):
+def vsum(vs):
     return ft.reduce(add, vs, [0] * len(vs[0]))
 
 
@@ -16,3 +16,4 @@ def dot(u, v):
 def norm(v):
     mag = dot_product(v, v) ** (1 / 2)
     return [x / mag for x in v]
+
