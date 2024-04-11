@@ -1,12 +1,18 @@
-def add_vectors(xs, ys):
-    return [x + y for (x, y) in zip(xs, ys)]
+import functools as ft
 
 
-def dot_product(xs, ys):
-    return sum([x * y for (x, y) in zip(xs, ys)])
+def add(u, v):
+    return [a + b for (a, b) in zip(u, v)]
 
 
-def normalize(xs):
-    mag = dot_product(xs, xs) ** (1 / 2)
-    return [x / mag for x in xs]
+def sum(vs):
+    return ft.reduce(add, vs, [0] * len(vs[0]))
 
+
+def dot(u, v):
+    return sum([a * b for (a, b) in zip(u, v)])
+
+
+def norm(v):
+    mag = dot_product(v, v) ** (1 / 2)
+    return [x / mag for x in v]

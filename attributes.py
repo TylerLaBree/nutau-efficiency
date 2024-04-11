@@ -178,10 +178,8 @@ def missing_transverse_momentum(event):
         0.10082778355381398,
         0.9949038938776671,
     ]
-    total_visible_momentum = ft.reduce(
-        v.add_vectors, it.compress(momenta(event), kept_particles(event)), [0, 0, 0]
-    )
-    return v.dot_product(total_visible_momentum, beamline_direction)
+    total_visible_momentum = v.sum(it.compress(momenta(event), kept_particles(event)))
+    return v.dot(total_visible_momentum, beamline_direction)
 
 
 def num_jets(event):
