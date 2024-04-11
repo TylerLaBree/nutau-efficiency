@@ -5,7 +5,7 @@ import vector_math as v
 
 def particles_in_event(event):
     "Gives a generator for particles given an event"
-    return (event.product()[0].GetParticle(i) for i in range(num_particles(event)))
+    return (event.product()[0].GetParticle(i) for i in range(particle_count(event)))
 
 
 def initial_neutrino(event):
@@ -81,7 +81,7 @@ def four_momentum(particle):
     return [particle.Momentum()[j] for j in range(4)]
 
 
-def four_momentums(event):
+def four_momenta(event):
     return [four_momentum(particle) for particle in particles_in_event(event)]
 
 
@@ -89,7 +89,7 @@ def momentum(particle):
     return four_momentum(particle)[:3]
 
 
-def momentums(event):
+def momenta(event):
     return [momentum(particle) for particle in particles_in_event(event)]
 
 
@@ -105,16 +105,16 @@ def energies(event):
     return [energy(particle) for particle in particles_in_event(event)]
 
 
-def num_particles(event):
+def particle_count(event):
     return event.product()[0].NParticles()
 
 
 def is_lepton(particle):
-    "Helper function for num_leptons"
+    "Helper function for lepton_count"
     return pdg_code(particle) in [11, -11, 13, -13]
 
 
-def num_leptons(event):
+def lepton_count(event):
     """
     Machado N_lep
     Returns number of (anti)electrons and (anti)muons
@@ -123,11 +123,11 @@ def num_leptons(event):
 
 
 def is_negative_pion(particle):
-    "Helper function for num_pions and leading_pion_energies"
+    "Helper function for pion_count and leading_pion_energies"
     return pdg_code(particle) == -211
 
 
-def num_pions(event):
+def pion_count(event):
     """
     Machado N_(π^-)
     Returns number of negative pions.
@@ -137,7 +137,7 @@ def num_pions(event):
 
 
 def keep_event(event):
-    return num_pions(event) != 0 and num_leptons(event) == 0
+    return pion_count(event) != 0 and lepton_count(event) == 0
 
 
 def leading_pion_energy(event):
@@ -179,7 +179,7 @@ def missing_transverse_momentum(event):
         0.9949038938776671,
     ]
     total_visible_momentum = ft.reduce(
-        v.add_vectors, it.compress(momentums(event), kept_particles(event)), [0, 0, 0]
+        v.add_vectors, it.compress(momenta(event), kept_particles(event)), [0, 0, 0]
     )
     return v.dot_product(total_visible_momentum, beamline_direction)
 
