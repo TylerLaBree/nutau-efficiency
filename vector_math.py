@@ -2,10 +2,15 @@ import functools as ft
 
 
 def add(u, v):
+    if not (len(u) == len(v)):
+        print("ERROR in vector_math.add(u, v): vectors not same length")
+        return None
     return [a + b for (a, b) in zip(u, v)]
 
 
 def vsum(vs):
+    if len(vs) == 0:
+        return 0
     return ft.reduce(add, vs, [0] * len(vs[0]))
 
 
