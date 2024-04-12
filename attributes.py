@@ -181,7 +181,7 @@ def missing_transverse_momentum(event):
     total_visible_momentum = ft.reduce(
         v.add, it.compress(momenta(event), kept_particles(event)), [0] * 3
     )
-    return v.dot(total_visible_momentum, beamline_direction)
+    return v.magnitude(v.cross(total_visible_momentum, beamline_direction))
 
 
 def num_jets(event):
@@ -195,3 +195,4 @@ def num_jets(event):
     - Machado 2020
     """
     return 0
+
