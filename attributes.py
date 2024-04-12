@@ -1,5 +1,6 @@
 import itertools as it
 import functools as ft
+import math
 import vector_math as v
 
 
@@ -168,16 +169,17 @@ def neutrino_direction(event):
     return momentum(initial_neutrino(event))
 
 
+def calc_beamline_direction():
+    beamline_angle = 5.786839915833852 / 180 * math.pi
+    return [0, math.sin(beamline_angle), math.cos(beamline_angle)]
+
+
 def missing_transverse_momentum(event):
     """
     Machado p_T^miss
     Returns the transverse component of the momentum orthogonal to the beam-line
     """
-    beamline_direction = [
-        -7.818601810437586e-08,
-        0.10082778355381398,
-        0.9949038938776671,
-    ]
+    beamline_direction = [0, 0.10082778355435233, 0.9949038938829804]
     total_visible_momentum = ft.reduce(
         v.add, it.compress(momenta(event), kept_particles(event)), [0] * 3
     )
@@ -195,4 +197,3 @@ def num_jets(event):
     - Machado 2020
     """
     return 0
-
